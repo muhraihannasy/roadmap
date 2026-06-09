@@ -1,143 +1,786 @@
 <!DOCTYPE html>
-<html>
-<head><meta charset="utf-8" /><title>Pitch Deck</title></head>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validasi Bisnis — Platform Roadmap Belajar Indonesia</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:wght@600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:   #1D9E75;
+    --green-lt:#E1F5EE;
+    --green-dk:#085041;
+    --amber:   #BA7517;
+    --amber-lt:#FAEEDA;
+    --red:     #A32D2D;
+    --red-lt:  #FCEBEB;
+    --gray:    #5F5E5A;
+    --gray-lt: #F1EFE8;
+    --ink:     #1a1a18;
+    --muted:   #6b6b67;
+    --border:  #e2e0d8;
+    --bg:      #fafaf8;
+    --white:   #ffffff;
+    --radius:  10px;
+  }
+
+  html { font-size: 16px; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 860px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+  /* ── COVER ── */
+  .cover {
+    padding: 5rem 0 4rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4rem;
+  }
+  .cover-label {
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cover-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 2px;
+    background: var(--green);
+  }
+  .cover h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    max-width: 640px;
+    margin-bottom: 1.25rem;
+  }
+  .cover h1 em {
+    font-style: italic;
+    color: var(--green);
+  }
+  .cover-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 540px;
+    margin-bottom: 2.5rem;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item { font-size: 13px; color: var(--muted); }
+  .cover-meta-item strong { color: var(--ink); font-weight: 500; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 4rem; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.75rem;
+  }
+  .section-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    color: var(--green);
+    background: var(--green-lt);
+    padding: 3px 10px;
+    border-radius: 40px;
+    white-space: nowrap;
+  }
+  .section-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* ── CALLOUT QUOTE ── */
+  .callout-quote {
+    border-left: 3px solid var(--green);
+    padding: 1.25rem 1.5rem;
+    background: var(--green-lt);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-bottom: 2rem;
+  }
+  .callout-quote p {
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--green-dk);
+    line-height: 1.65;
+  }
+  .callout-quote cite {
+    display: block;
+    font-size: 12px;
+    font-style: normal;
+    color: var(--green);
+    margin-top: .5rem;
+    letter-spacing: .04em;
+  }
+
+  /* ── STAT CARDS ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .stat-card .num {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ink);
+    display: block;
+    line-height: 1.1;
+  }
+  .stat-card .num.green { color: var(--green); }
+  .stat-card .lbl {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* ── PAIN POINT LIST ── */
+  .pain-list { display: flex; flex-direction: column; gap: 12px; }
+  .pain-item {
+    display: flex;
+    gap: 14px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    align-items: flex-start;
+  }
+  .pain-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .pain-icon.red   { background: var(--red-lt); }
+  .pain-icon.amber { background: var(--amber-lt); }
+  .pain-icon.gray  { background: var(--gray-lt); }
+  .pain-content h4 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+  .pain-content p  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .pain-tag {
+    display: inline-block; margin-top: 6px;
+    font-size: 11px; padding: 2px 8px;
+    border-radius: 40px; border: 1px solid var(--border);
+    color: var(--muted); background: var(--bg);
+  }
+
+  /* ── COMPARE TABLE ── */
+  .compare-wrap { overflow-x: auto; margin-bottom: 1.5rem; }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13.5px; background: var(--white);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden;
+  }
+  thead tr { background: var(--gray-lt); }
+  th {
+    text-align: left; padding: .75rem 1rem;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted); border-bottom: 1px solid var(--border);
+  }
+  td { padding: .75rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  tr:last-child td { border-bottom: none; }
+  .badge-us {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 40px;
+    background: var(--green-lt); color: var(--green-dk);
+  }
+
+  /* ── MARKET TABLE ── */
+  .market-row {
+    display: grid; grid-template-columns: 90px 1fr 1fr;
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden; margin-bottom: 2rem;
+  }
+  .market-cell {
+    background: var(--white); padding: 1rem 1.25rem;
+  }
+  .market-cell.head {
+    background: var(--gray-lt);
+    font-size: 11px; font-weight: 600;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted); display: flex; align-items: center;
+  }
+  .market-cell .big {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.6rem; font-weight: 700; color: var(--ink);
+    display: block;
+  }
+  .market-cell .big.green { color: var(--green); }
+  .market-cell .desc { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+  /* ── BUSINESS MODEL CARDS ── */
+  .biz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px; margin-bottom: 2rem;
+  }
+  .biz-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem;
+  }
+  .biz-card.featured { border-color: var(--green); border-width: 2px; }
+  .biz-label {
+    font-size: 11px; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: .5rem;
+  }
+  .biz-label.green { color: var(--green); }
+  .biz-price {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .biz-price span { font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 400; color: var(--muted); }
+  .biz-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: .75rem; }
+  .biz-features { list-style: none; }
+  .biz-features li {
+    font-size: 13px; color: var(--muted);
+    padding: 3px 0; display: flex; gap: 8px;
+  }
+  .biz-features li::before { content: '✓'; color: var(--green); font-weight: 600; flex-shrink: 0; }
+
+  /* ── VALIDATION STEPS ── */
+  .val-list { display: flex; flex-direction: column; gap: 0; }
+  .val-item {
+    display: flex; gap: 20px;
+    padding: 1.25rem 0; border-bottom: 1px solid var(--border);
+  }
+  .val-item:last-child { border-bottom: none; }
+  .val-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--green); color: var(--white);
+    font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .val-content h4 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .val-content p  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .kpi-row {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;
+  }
+  .kpi-pill {
+    font-size: 12px; padding: 3px 10px;
+    border-radius: 40px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--muted);
+  }
+  .kpi-pill.green {
+    border-color: var(--green); background: var(--green-lt); color: var(--green-dk);
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px;
+    width: 2px; background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 1.5rem; }
+  .tl-dot {
+    position: absolute; left: -24px; top: 4px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--white); border: 2px solid var(--border);
+  }
+  .tl-dot.active { background: var(--green); border-color: var(--green); }
+  .tl-week {
+    font-size: 11px; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--green); margin-bottom: 4px;
+  }
+  .tl-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .tl-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── REVENUE PROJECTION ── */
+  .proj-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-bottom: 2rem;
+  }
+  .proj-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem;
+  }
+  .proj-card .year { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .proj-card .rev {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.75rem; font-weight: 700; color: var(--ink); margin-bottom: 4px;
+  }
+  .proj-card .asumsi { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── USP BOX ── */
+  .usp-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px; margin-bottom: 2rem;
+  }
+  .usp-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.1rem 1.25rem;
+  }
+  .usp-card .icon { font-size: 22px; margin-bottom: 8px; }
+  .usp-card h4 { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .usp-card p  { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── CLOSING ── */
+  .closing {
+    background: var(--ink); border-radius: 16px;
+    padding: 3rem 2.5rem; text-align: center; margin-top: 5rem;
+  }
+  .closing h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.75rem; font-weight: 700; color: var(--white);
+    margin-bottom: .75rem;
+  }
+  .closing p  { font-size: 15px; color: #a8a8a4; line-height: 1.7; max-width: 480px; margin: 0 auto; }
+
+  /* ── DIVIDER ── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 3.5rem 0; }
+
+  /* ── PROSE ── */
+  .prose { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 1.5rem; }
+  .prose strong { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 600px) {
+    .cover { padding: 3rem 0 2.5rem; }
+    .proj-grid { grid-template-columns: 1fr; }
+    .market-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
 <body>
-<section>
-  <h1>Ringkasan Eksekutif</h1>
-  <ul>
-    <li><strong>Masalah:</strong> Tingkat penyelesaian kursus online sangat rendah (~12%). Banyak yang putus belajar karena kurang sistem.</li>
-    <li><strong>Solusi:</strong> Platform *Habit OS* pembelajaran—kombinasi roadmap + gamifikasi + komunitas. Membantu pengguna <em>benar-benar</em> menyelesaikan tujuan belajar.</li>
-    <li><strong>Fokus Awal:</strong> Karier digital (fresh grads/career switchers 18–30). Segmentasi ini besar & urgent.</li>
-    <li><strong>Bisnis:</strong> Fitur gratis terbatas + tiered pricing (Rp50–150rb lifetime, plus subscription komunitas). Ciptakan pendapatan berulang melalui langganan mentor/sertifikat.</li>
-    <li><strong>Validasi Cepat:</strong> 14–30 hari: landing page & pre-sale, 20 wawancara, metrik retensi. Jika sukses, skala pengembangan.</li>
-    <li><strong>Ask:</strong> Pendanaan awal untuk MVP dan validasi. Target: 100rb+ lead, 1.000 bayar di 3 bulan pertama.</li>
-  </ul>
-</section>
+<div class="page">
 
-<section>
-  <h2>Masalah (Pain Point)</h2>
-  <p>Banyak orang bingung mulai belajar apa dan putus di tengah jalan. Dalam MOOC global, hanya 12–15% yang menyelesaikan kursus. Di Indonesia, meski 73% penduduk online, pengguna kesulitan konsisten karena tidak ada sistem mendukung (goal-setting, pengingat, dsb.).</p>
-  <p>Contoh: fresh grad TI belajar DevOps tapi stop setelah 2 minggu. Mereka punya tujuan besar tapi jatuh karena tidak punya *sistem pembelajaran*. **Opportunity:** Pasar e-learning global tumbuh 9.9%/thn, banyak pekerja perlu reskill; tapi solusi lokal yang memadukan roadmap + habit tracking masih jarang.</p>
-</section>
+  <!-- COVER -->
+  <header class="cover">
+    <p class="cover-label">Dokumen Validasi Bisnis</p>
+    <h1>Platform <em>Habit OS</em><br>untuk Belajar Indonesia</h1>
+    <p class="cover-sub">Riset dan analisis mendalam tentang peluang, kompetitor, model bisnis, dan rencana validasi untuk platform roadmap belajar gamified pertama di Indonesia.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><strong>Target Market</strong><br>Fresh grad & career switcher 18–30 thn</div>
+      <div class="cover-meta-item"><strong>Harga MVP</strong><br>Rp50.000 lifetime (early adopter)</div>
+      <div class="cover-meta-item"><strong>Tech Cost</strong><br>~Rp0 (Supabase + Vercel free tier)</div>
+      <div class="cover-meta-item"><strong>Status</strong><br>Pre-MVP, siap validasi</div>
+    </div>
+  </header>
 
-<section>
-  <h2>Solusi Kami</h2>
-  <ul>
-    <li><strong>Roadmap Terstruktur:</strong> Contoh: “Roadmap DevOps 90 hari” dengan checklist harian.</li>
-    <li><strong>Gamifikasi & Tracking:</strong> XP, lencana, pencapaian, & grafik progress. Memotivasi kembali belajar setiap hari.</li>
-    <li><strong>Komunitas & Akuntabilitas:</strong> Grup belajar/mentoring, tantangan mingguan. (Cohort-based learning lulus 85–90%.)</li>
-    <li><strong>Konteks Lokal:</strong> Semua materi relevan pasar Indonesia (lowongan kerja, skill populer lokal).</li>
-    <li><strong>Teknologi AI:</strong> (Fase 2) Chatbot tutor untuk personalisasi pengingat dan saran belajar.</li>
-  </ul>
-  <p><em>Tagline:</em> “**Dari Bingung ke Konsisten ke Dapat Kerja**” – platform kami fokus memastikan tujuan karier Anda tercapai.</p>
-</section>
+  <!-- 1. MASALAH -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Masalah yang Belum Terpecahkan</h2>
+    </div>
+    <div class="callout-quote">
+      <p>"Dari 100 orang yang mulai kursus online, hanya 12–15 yang benar-benar selesai. Bukan karena malas — tapi karena tidak ada sistem yang mendukung mereka untuk konsisten."</p>
+      <cite>— Analisis 221 MOOC global, median completion rate 12.6%</cite>
+    </div>
+    <div class="stat-row">
+      <div class="stat-card"><span class="num green">12.6%</span><div class="lbl">rata-rata completion rate kursus online global</div></div>
+      <div class="stat-card"><span class="num">283 juta</span><div class="lbl">populasi Indonesia, 73% sudah online</div></div>
+      <div class="stat-card"><span class="num">50 juta</span><div class="lbl">target usia 18–30 yang butuh upskilling</div></div>
+      <div class="stat-card"><span class="num green">0</span><div class="lbl">platform lokal yang gabungkan roadmap + gamifikasi + kurasi gratis</div></div>
+    </div>
+    <div class="pain-list">
+      <div class="pain-item">
+        <div class="pain-icon red">🧭</div>
+        <div class="pain-content">
+          <h4>Tidak tahu harus mulai dari mana</h4>
+          <p>Konten gratis berlimpah di YouTube, artikel, dan forum — tapi justru itu masalahnya. Terlalu banyak pilihan tanpa urutan yang jelas membuat orang paralysis sebelum mulai.</p>
+          <span class="pain-tag">Information overload</span>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon red">📉</div>
+        <div class="pain-content">
+          <h4>Semangat di awal, hilang di minggu kedua</h4>
+          <p>Completion rate kursus online di bawah 15%. Tidak ada sistem, tidak ada accountability, tidak ada reward — motivasi menguap setelah beberapa hari.</p>
+          <span class="pain-tag">Low completion rate</span>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon amber">💸</div>
+        <div class="pain-content">
+          <h4>Gap besar antara "gratis tapi berantakan" dan "terstruktur tapi mahal"</h4>
+          <p>Kursus berkualitas di Indonesia bisa Rp500rb–Rp5jt. Banyak orang tidak mampu, lalu kembali ke YouTube yang gratis tapi membingungkan. Tidak ada tengah-tengah yang benar-benar solves the problem.</p>
+          <span class="pain-tag">Price accessibility gap</span>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon amber">🗺️</div>
+        <div class="pain-content">
+          <h4>Roadmap yang ada tidak relevan konteks Indonesia</h4>
+          <p>Roadmap dari platform luar dibuat untuk pasar mereka — rekomendasi tool, sumber belajar, dan konteks pasar kerja tidak sesuai kondisi Indonesia.</p>
+          <span class="pain-tag">Localization gap</span>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon gray">😶</div>
+        <div class="pain-content">
+          <h4>Belajar sendirian tanpa accountability</h4>
+          <p>Tidak ada feedback, tidak ada teman belajar, tidak ada yang mengingatkan. Cohort-based course memiliki completion rate 85–90% karena ada social pressure — belajar mandiri dari internet tidak punya ini.</p>
+          <span class="pain-tag">Accountability gap</span>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon gray">💾</div>
+        <div class="pain-content">
+          <h4>Progress belajar tidak pernah tersimpan</h4>
+          <p>Belajar dari YouTube tidak meninggalkan jejak. Besok lupa sudah sampai mana, tab browser menumpuk 40, dan akhirnya mulai ulang dari awal — lagi dan lagi.</p>
+          <span class="pain-tag">No persistent progress</span>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon red">😴</div>
+        <div class="pain-content">
+          <h4>Belajar terasa membosankan</h4>
+          <p>Tidak ada reward, tidak ada milestone yang terasa, tidak ada rasa pencapaian. Tanpa gamifikasi, belajar online terasa seperti kerja paksa — otak manusia tidak dirancang untuk bertahan dalam kondisi itu.</p>
+          <span class="pain-tag">Engagement problem</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section>
-  <h2>Peluang Pasar</h2>
-  <p>Indonesia: ~283 juta penduduk, 73% online. Grup 18–30 (fresh grads & switchers) ≈50 juta. Jika hanya 10% aktif mencari karier baru, itu 5 juta orang. Bahkan 1% dari 5 juta = 50 ribu pengguna <em>berbayar</em> hanya di segmen awal. </p>
-  <table>
-    <tr><th>Market</th><th>Population</th><th>Keterangan</th></tr>
-    <tr><td>TAM</td><td>~50 juta</td><td>Usia 18–30, urban online</td></tr>
-    <tr><td>SAM</td><td>~10 juta</td><td>Minat serius peningkatan karier</td></tr>
-    <tr><td>SOM (thn1)</td><td>~100–500 ribu</td><td>Target pengguna berbayar 1–5% dari SAM</td></tr>
-  </table>
-</section>
+  <hr>
 
-<section>
-  <h2>Strategi & Model Bisnis</h2>
-  <ul>
-    <li><strong>Roadmap Freemium:</strong> Beberapa roadmap dasar gratis, paket lengkap berbayar (Rp50–150rb one-time).</li>
-    <li><strong>Langganan Komunitas:</strong> Grup eksklusif Rp30–50rb/bulan untuk coaching, mentor, sertifikat.</li>
-    <li><strong>Sertifikasi & Kursus Tambahan:</strong> Kerjasama dengan provider (contoh: sertifikat akuntansi, kursus intensif IT).</li>
-    <li><strong>Skala Pendapatan:</strong> Monetisasi bertahap: dari 100rb pengguna × Rp50rb = Rp5M; tambah berlangganan/asesmen bayar untuk skala lanjut.</li>
-  </ul>
-  <p>*Catatan:* Walau harga murah, nilai datang dari **hasil (outcome)**: pekerjaan baru, promosi, dsb. Coursera mencatat 77% lulusannya mendapatkan manfaat karier – kami mengadaptasi model fokus outcome itu ke pasar lokal.</p>
-</section>
+  <!-- 2. SOLUSI -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Solusi — Habit OS untuk Belajar</h2>
+    </div>
+    <p class="prose">Bukan sekadar kumpulan roadmap. Ini adalah <strong>sistem yang memastikan orang benar-benar selesai belajar</strong> — menggabungkan kurasi konten gratis, gamifikasi, progress tracking, dan komunitas lokal.</p>
+    <div class="callout-quote">
+      <p>"You don't rise to the level of your goals, you fall to the level of your systems."</p>
+      <cite>— Atomic Habits, James Clear — Fondasi pendekatan produk kami</cite>
+    </div>
+    <div class="usp-grid">
+      <div class="usp-card"><div class="icon">🗺️</div><h4>Structured Journey</h4><p>Roadmap week-by-week dengan checkpoint jelas. Bukan daftar link — tapi perjalanan yang bisa diikuti.</p></div>
+      <div class="usp-card"><div class="icon">⚡</div><h4>Gamifikasi XP & Streak</h4><p>Poin, level, badge, dan streak harian. Otak dapat reward setiap langkah kecil — seperti Duolingo tapi untuk skill karier.</p></div>
+      <div class="usp-card"><div class="icon">📊</div><h4>Progress Tracking</h4><p>Progress tersimpan permanen. Selalu tahu sudah sampai mana dan berapa persen lagi menuju selesai.</p></div>
+      <div class="usp-card"><div class="icon">🇮🇩</div><h4>Kurasi Konten Lokal</h4><p>Resource dari kreator Indonesia, konteks pasar kerja lokal, bahasa yang mudah dipahami.</p></div>
+      <div class="usp-card"><div class="icon">👥</div><h4>Community & Accountability</h4><p>Belajar bareng komunitas, tantangan mingguan. Social pressure yang sehat untuk tetap konsisten.</p></div>
+      <div class="usp-card"><div class="icon">🤖</div><h4>AI Personalization (Fase 2)</h4><p>Roadmap disesuaikan background dan tujuan tiap user. Semakin lama pakai, semakin personal.</p></div>
+    </div>
+  </section>
 
-<section>
-  <h2>Validasi & Roadmap 30 Hari</h2>
-  <p><strong>Rencana Eksperimen (14–30 hari):</strong></p>
-  <ol>
-    <li>Buat landing page & kampanye ads (target fresh grads). Lakukan pre-order paket roadmap (target 100–200 pengunjung).</li>
-    <li>Jual sample roadmap di Notion ke 20 pembeli awal.</li>
-    <li>Wawancara ~20 pengguna; gali hambatan belajar & willingness-to-pay.</li>
-    <li>Ukuran keberhasilan: sign-up/waitlist >5% pengunjung, >10% bayar, D7 retention >30% dari pengguna awal.</li>
-  </ol>
-  <div style="font-family:monospace; background:#f4f4f4; padding:10px;">
-    <!-- Mermaid chart for timeline -->
-    gantt
-      dateFormat  YYYY-MM-DD
-      title Validasi MVP 14 Hari
-      section Persiapan
-      Landing page & materi ready       :done, 2026-06-11, 4d
-      Skrip wawancara & Notion roadmap   :done, 2026-06-13, 3d
-      section Pelaksanaan
-      Launch & kampanye                 :active, 2026-06-17, 5d
-      Wawancara pengguna (x20)          :2026-06-17, 5d
-      Penutupan pre-sale                :2026-06-22, 1d
-      Analisis data awal                :2026-06-23, 2d
+  <hr>
+
+  <!-- 3. MARKET -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Peluang Pasar</h2>
+    </div>
+    <p class="prose">Fokus awal pada segmen <strong>fresh graduate dan career switcher usia 18–30</strong> — kelompok dengan urgensi tinggi, willingness to pay yang jelas (karena dampak langsung ke pendapatan), dan ukuran pasar yang besar.</p>
+    <div class="market-row">
+      <div class="market-cell head">TAM</div>
+      <div class="market-cell"><span class="big">~50 juta</span><span class="desc">Total usia 18–30 di Indonesia yang aktif online</span></div>
+      <div class="market-cell"><span class="desc" style="font-size:13px; color:#6b6b67; line-height:1.6; display:block; padding-top:4px;">Populasi 283 juta, ~20% berusia 18–30, penetrasi internet 73%</span></div>
+
+      <div class="market-cell head">SAM</div>
+      <div class="market-cell"><span class="big">~10 juta</span><span class="desc">Aktif mencari upskilling karier digital</span></div>
+      <div class="market-cell"><span class="desc" style="font-size:13px; color:#6b6b67; line-height:1.6; display:block; padding-top:4px;">~20% dari TAM yang memiliki urgensi dan niat belajar terstruktur</span></div>
+
+      <div class="market-cell head">SOM</div>
+      <div class="market-cell"><span class="big green">100–500 rb</span><span class="desc">Target pengguna berbayar tahun pertama</span></div>
+      <div class="market-cell"><span class="desc" style="font-size:13px; color:#6b6b67; line-height:1.6; display:block; padding-top:4px;">1–5% penetrasi dari SAM. Dengan Rp50rb/user = potensi Rp5–25 miliar</span></div>
+    </div>
+    <p class="prose" style="font-size:13px;">Pasar e-learning Indonesia diproyeksi melampaui <strong>USD 1 miliar pada 2025</strong>. Demand upskilling sedang di puncak pasca gelombang PHK tech dan persaingan kerja yang makin ketat.</p>
+  </section>
+
+  <hr>
+
+  <!-- 4. KOMPETITOR -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Analisis Kompetitor</h2>
+    </div>
+    <p class="prose">Tidak ada satu pun platform Indonesia yang menggabungkan <strong>roadmap multi-topik + kurasi sumber gratis + gamifikasi + progress tracking + konteks lokal</strong>. Ini white space yang nyata.</p>
+    <div class="compare-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Kompetitor</th>
+            <th>Kekuatan</th>
+            <th>Kelemahan Fatal</th>
+            <th>Posisi Kami</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Duolingo</strong><br><span style="font-size:12px;color:#999">Bahasa gamified</span></td>
+            <td>UX gamifikasi terbaik, 103 juta MAU, brand kuat</td>
+            <td>Hanya bahasa — tidak bisa diperluas ke skill karier</td>
+            <td>Adopsi mekanisme gamifikasinya untuk topik karier</td>
+          </tr>
+          <tr>
+            <td><strong>Coursera</strong><br><span style="font-size:12px;color:#999">MOOC global</span></td>
+            <td>124 juta+ user, konten berkelas, kredensial dunia</td>
+            <td>Mahal, tidak lokal, completion rate tetap rendah</td>
+            <td>Harga terjangkau + konteks Indonesia + sistem selesai</td>
+          </tr>
+          <tr>
+            <td><strong>Roadmap.sh</strong><br><span style="font-size:12px;color:#999">Portal roadmap IT</span></td>
+            <td>Kurasi konten teknis lengkap, komunitas dev besar</td>
+            <td>Statis, hanya teks, tanpa gamifikasi, tanpa tracking</td>
+            <td>Ambil konsep roadmap-nya, tambahkan execution engine</td>
+          </tr>
+          <tr>
+            <td><strong>Habitica / Habit apps</strong><br><span style="font-size:12px;color:#999">Habit tracker</span></td>
+            <td>Gamifikasi habit yang bagus, ada komunitas</td>
+            <td>Tidak ada kurikulum — habit umum, bukan skill spesifik</td>
+            <td>Gamifikasi spesifik untuk belajar, bukan kebiasaan umum</td>
+          </tr>
+          <tr>
+            <td><strong>ChatGPT</strong><br><span style="font-size:12px;color:#999">AI assistant</span></td>
+            <td>Bisa buat roadmap instan, gratis, canggih</td>
+            <td>Stateless — tidak ada tracking, tidak mendorong rutinitas</td>
+            <td>Gunakan AI sebagai backend generator, bukan produknya</td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--green)">Platform Kami</strong></td>
+            <td colspan="3"><span class="badge-us">Satu-satunya yang gabungkan: roadmap lokal + kurasi gratis + gamifikasi + tracking + komunitas Indonesia</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- 5. MODEL BISNIS -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Model Bisnis</h2>
+    </div>
+    <p class="prose">Strategi bertahap — mulai dengan one-time fee yang rendah untuk membangun user base, kemudian evolusi ke subscription dengan fitur premium yang lebih dalam.</p>
+    <div class="biz-grid">
+      <div class="biz-card">
+        <div class="biz-label">Free Tier</div>
+        <div class="biz-price">Gratis</div>
+        <p class="biz-desc">Untuk akuisisi dan distribusi viral</p>
+        <ul class="biz-features">
+          <li>1 roadmap pilihan</li>
+          <li>Checklist & progress basic</li>
+          <li>Community read-only</li>
+        </ul>
+      </div>
+      <div class="biz-card featured">
+        <div class="biz-label green">⭐ Early Adopter — MVP</div>
+        <div class="biz-price">Rp50.000 <span>lifetime</span></div>
+        <p class="biz-desc">Impulse buy. Target 200–500 pembeli pertama untuk validasi</p>
+        <ul class="biz-features">
+          <li>Semua roadmap saat launch</li>
+          <li>XP, streak, badge system</li>
+          <li>Progress tracking penuh</li>
+          <li>Community akses penuh</li>
+        </ul>
+      </div>
+      <div class="biz-card">
+        <div class="biz-label">Phase 2 — Lifetime</div>
+        <div class="biz-price">Rp149.000 <span>lifetime</span></div>
+        <p class="biz-desc">Setelah early adopter penuh, harga naik</p>
+        <ul class="biz-features">
+          <li>Semua roadmap + roadmap baru</li>
+          <li>Semua fitur Phase 1</li>
+          <li>Priority roadmap request</li>
+        </ul>
+      </div>
+      <div class="biz-card">
+        <div class="biz-label">Phase 3 — Subscription</div>
+        <div class="biz-price">Rp29.000 <span>/bulan</span></div>
+        <p class="biz-desc">Recurring revenue dengan fitur premium</p>
+        <ul class="biz-features">
+          <li>AI personalization</li>
+          <li>Accountability group</li>
+          <li>Certificate of completion</li>
+          <li>Mentor access</li>
+        </ul>
+      </div>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="year">Proyeksi Tahun 1</div>
+        <div class="rev">Rp5 miliar</div>
+        <div class="asumsi">100.000 pengguna × Rp50.000 (skenario konservatif dari SOM 1% SAM)</div>
+      </div>
+      <div class="proj-card">
+        <div class="year">Proyeksi Tahun 2</div>
+        <div class="rev">Rp20–50 miliar</div>
+        <div class="asumsi">500.000 pengguna + upsell subscription + sertifikat berbayar + potensi B2B corporate</div>
+      </div>
+    </div>
+    <p class="prose" style="font-size:13px;"><strong>Catatan:</strong> Angka di atas adalah skenario konservatif berdasarkan 1–5% penetrasi SAM. Semua proyeksi masih hipotesis dan perlu divalidasi lewat eksperimen 14–30 hari berikut.</p>
+  </section>
+
+  <hr>
+
+  <!-- 6. VALIDASI -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Rencana Validasi 14–30 Hari</h2>
+    </div>
+    <p class="prose">Sebelum build platform penuh, validasi <strong>willingness-to-pay</strong> dan <strong>retensi</strong> dengan eksperimen ringan. Tidak perlu coding, tidak perlu modal besar.</p>
+    <div class="val-list">
+      <div class="val-item">
+        <div class="val-num">1</div>
+        <div class="val-content">
+          <h4>Landing Page + Pre-Sale</h4>
+          <p>Buat halaman "Mulai Karier Digital-mu" dengan copy fokus hasil. Tawarkan pre-order paket roadmap Rp50.000. Jalankan promosi organik (TikTok, LinkedIn, Discord IT) dan ads kecil. Target 100–200 pengunjung.</p>
+          <div class="kpi-row">
+            <span class="kpi-pill green">Target: ≥5% pengunjung sign-up</span>
+            <span class="kpi-pill green">Target: ≥10% konversi bayar</span>
+          </div>
+        </div>
+      </div>
+      <div class="val-item">
+        <div class="val-num">2</div>
+        <div class="val-content">
+          <h4>Notion Roadmap Pre-Sale Manual</h4>
+          <p>Buat 1–2 roadmap contoh di Notion (misal: "Roadmap Backend Developer 30 hari"). Jual via DM ke 20 orang di komunitas. Tidak perlu platform — cukup transfer manual. Ini cara paling cepat test willingness-to-pay.</p>
+          <div class="kpi-row">
+            <span class="kpi-pill green">Target: ≥2 dari 20 orang bayar (10%)</span>
+          </div>
+        </div>
+      </div>
+      <div class="val-item">
+        <div class="val-num">3</div>
+        <div class="val-content">
+          <h4>20 User Interviews (Zoom/Telepon)</h4>
+          <p>Wawancara 15–20 menit dengan fresh grads dan career switchers. Gali: cara belajar saat ini, hambatan terbesar, pengalaman bayar kursus, dan reaksi terhadap konsep platform. Fokus pada pain point eksekusi dan konsistensi.</p>
+          <div class="kpi-row">
+            <span class="kpi-pill green">Target: ≥70% mengeluh soal konsistensi</span>
+            <span class="kpi-pill green">Target: ≥30% mau bayar solusi</span>
+          </div>
+        </div>
+      </div>
+      <div class="val-item">
+        <div class="val-num">4</div>
+        <div class="val-content">
+          <h4>Tracking Retensi Beta User</h4>
+          <p>Kirim akses beta (Notion/prototype) ke kelompok kecil. Monitor aktivitas via WhatsApp/Telegram. Ukur berapa yang kembali aktif setelah 7 dan 14 hari. Retensi rendah = produk belum "lengket", perlu iterasi.</p>
+          <div class="kpi-row">
+            <span class="kpi-pill green">Target D7 Retention: ≥30%</span>
+            <span class="kpi-pill">Rata-rata app: ~7% — kita targetkan jauh lebih tinggi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <h3 style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:1rem;">Timeline Eksekusi</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot active"></div>
+          <div class="tl-week">Minggu 1</div>
+          <div class="tl-title">Persiapan</div>
+          <div class="tl-desc">Buat landing page, skrip wawancara, dan 1–2 Notion roadmap sample. Siapkan materi promosi (konten sosial media).</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot active"></div>
+          <div class="tl-week">Minggu 2</div>
+          <div class="tl-title">Launch & Eksekusi</div>
+          <div class="tl-desc">Launch landing page, jalankan kampanye organik, mulai 20 wawancara pengguna secara paralel.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Minggu 3</div>
+          <div class="tl-title">Analisis Data Awal</div>
+          <div class="tl-desc">Tutup pre-sale, analisis sign-up dan konversi, review insight dari wawancara, ukur D7 retention beta user.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Minggu 4</div>
+          <div class="tl-title">Keputusan & Iterasi</div>
+          <div class="tl-desc">Jika semua KPI terpenuhi → proceed build platform penuh. Jika gagal → evaluasi hipotesis mana yang salah dan pivot.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- 7. KENAPA SEKARANG -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2 class="section-title">Kenapa Harus Dibangun Sekarang?</h2>
+    </div>
+    <div class="pain-list">
+      <div class="pain-item">
+        <div class="pain-icon gray" style="font-size:16px">📈</div>
+        <div class="pain-content">
+          <h4>Demand upskilling Indonesia di puncaknya</h4>
+          <p>Pasca gelombang PHK tech, persaingan kerja makin ketat, dan WEF memprediksi 50% pekerja perlu reskill sebelum 2025. Momentum ini belum pernah setinggi sekarang.</p>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon gray" style="font-size:16px">🤖</div>
+        <div class="pain-content">
+          <h4>AI membuat produksi roadmap berkualitas bisa dilakukan dalam jam</h4>
+          <p>Dua tahun lalu, membuat 50 roadmap berkualitas butuh tim dan berbulan-bulan. Sekarang dengan Claude/GPT, satu orang bisa generate, kurasi, dan publish roadmap baru dalam hitungan jam.</p>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon gray" style="font-size:16px">🏁</div>
+        <div class="pain-content">
+          <h4>Kompetitor lokal belum ada yang dominan di segmen ini</h4>
+          <p>Ruangguru dan Skill Academy fokus ke kursus berbayar dengan instruktur. Tidak ada yang fokus ke model "kurasi sumber gratis + gamifikasi + roadmap multi-topik". White space ini nyata dan tidak akan bertahan lama.</p>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon gray" style="font-size:16px">💻</div>
+        <div class="pain-content">
+          <h4>Zero-cost infrastructure sekarang sudah tersedia</h4>
+          <p>Supabase + Vercel free tier cukup untuk ribuan user pertama. Tidak perlu modal server. Ini peluang yang tidak ada 5 tahun lalu.</p>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon gray" style="font-size:16px">💳</div>
+        <div class="pain-content">
+          <h4>Kebiasaan bayar produk digital sudah terbentuk</h4>
+          <p>Penetrasi Spotify, Netflix, dan Canva Pro di Indonesia membuktikan bahwa barrier "bayar digital" sudah turun drastis. Tinggal menawarkan value yang jelas dengan harga yang masuk akal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <div class="closing">
+    <h2>Satu hal yang perlu diingat</h2>
+    <p>Orang tidak butuh lebih banyak konten gratis — mereka sudah tenggelam di dalamnya. Yang mereka butuhkan adalah sistem yang membantu mereka <strong style="color:#fff">mulai, konsisten, dan benar-benar selesai.</strong></p>
   </div>
-  <p>Capaian validasi ini akan menentukan: lanjut kembangkan fitur (jika metrik > target), atau revisi market positioning/model (jika gagal).</p>
-</section>
 
-<section>
-  <h2>Kompetisi & Keunggulan Kompetitif</h2>
-  <table>
-    <tr><th>Kompetitor</th><th>Positioning</th><th>Moat</th><th>Weakness</th></tr>
-    <tr>
-      <td>Duolingo</td>
-      <td>Aplikasi bahasa gamified</td>
-      <td>~103 juta MAU; UX gamifikasi top; model freemium kuat.</td>
-      <td>Hanya bahasa; tidak untuk karier lain.</td>
-    </tr><tr>
-      <td>Coursera</td>
-      <td>MOOC global (kursus&sertifikat)</td>
-      <td>124 juta+ user; konten premium; kredensial dunia.</td>
-      <td>Generic, biaya mahal, retention rendah (kursus online umumnya <15% selesai).</td>
-    </tr><tr>
-      <td>Roadmap.sh</td>
-      <td>Free web portal roadmap IT</td>
-      <td>Konten teknis lengkap; komunitas dev besar.</td>
-      <td>Hanya teks; tanpa gamifikasi/eksekusi.</td>
-    </tr><tr>
-      <td>Habit Trackers</td>
-      <td>Aplikasi gamified habit (Habitica, Streaks)</td>
-      <td>Gamifikasi umum; beberapa punya komunitas (Habitica).</td>
-      <td>Tidak fokus edukasi; fitur pembelajaran minimal.</td>
-    </tr><tr>
-      <td>ChatGPT</td>
-      <td>AI assistant serbaguna</td>
-      <td>Jutaan pengguna; bisa buat roadmap custom instan.</td>
-      <td>Tidak ada sistem progres; tidak mendorong kebiasaan.</td>
-    </tr>
-  </table>
-  <p><strong>Keunggulan kami:</strong> Kami menggabungkan **kurasi lokal + motivasi berkelanjutan**. Roadmap bisa dicari di Google, tapi yang membedakan adalah *sistem execution* (XP, streaks, reminders, komunitas) sehingga pengguna benar-benar konsisten sampai selesai—point yang ChatGPT atau kursus biasa tidak tawarkan.</p>
-</section>
-
-<section>
-  <h2>KPI & Proyeksi</h2>
-  <ul>
-    <li><strong>Funnel Metrics:</strong> Conversion Rate (visitor→signup) ≥5%; Paid Conversion ≥10% dari signup.</li>
-    <li><strong>Retention:</strong> D7 >30%, D30 >15% (target ambisius untuk education app).</li>
-    <li><strong>Engagement:</strong> >70% pengguna menyelesaikan setidaknya 2 roadmap pertama.</li>
-    <li><strong>Financial:</strong> CAC ≤ Rp50.000, LTV (akun lifetime) minimal Rp100.000. (Awal tidak pasti, akan disesuaikan setelah data.)</li>
-  </ul>
-  <p>*Dashboard sample (contoh prototipe) menampilkan chart funnel pengguna dan grafik retensi mingguan.*</p>
-</section>
-
-<section>
-  <h2>Roadmap & Langkah Berikutnya</h2>
-  <ul>
-    <li>Fokus validasi 14–30 hari sesuai rencana eksperimen di slide sebelumnya.</li>
-    <li>Setelah validasi positif, lanjutkan pengembangan MVP dengan fitur lengkap (banyak roadmap, komunitas, AI chat).</li>
-    <li>Skalakan akuisisi pengguna (bayar + organik) berdasarkan saluran efisien.</li>
-    <li>Persiapkan fundraising untuk iterasi berikut (integrasi AI, kemitraan pendidikan).</li>
-  </ul>
-</section>
-
-<section>
-  <h1>Terima Kasih!</h1>
-  <p>Segera kami siapkan demo MVP. Kontak: <em>Founder Name – founder@example.com</em></p>
-</section>
+</div>
 </body>
 </html>
